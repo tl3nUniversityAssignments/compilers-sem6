@@ -87,6 +87,16 @@ var      return yy::tiger_parser::make_VAR(loc);
  /* Identifiers */
 {id}       return yy::tiger_parser::make_ID(Symbol(yytext), loc);
 
+ /* Integers */
+(0|[1-9][0-9]*) {
+    errno = 0;
+    long value = strtol(yytext, nullptr, 10);
+    if (errno == ERANGE || value < 0 || value > TIGER_INT_MAX) {
+        utils::error(loc, "integer out of range");
+    }
+    return yy::tiger_parser::make_INT(static_cast<int>(value), loc);
+}
+
  /* Strings */
 \" {BEGIN(STRING); string_buffer.clear();}
 
