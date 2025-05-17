@@ -166,25 +166,32 @@ negExpr: MINUS expr
 
 /*opExp: expr op expr*/
 
-opExpr: expr PLUS expr   { $$ = new BinaryOperator(@2, $1, $3, o_plus); }
-      | expr MINUS expr  { $$ = new BinaryOperator(@2, $1, $3, o_minus); }
-      | expr TIMES expr  { $$ = new BinaryOperator(@2, $1, $3, o_times); }
-      | expr DIVIDE expr { $$ = new BinaryOperator(@2, $1, $3, o_divide); }
-      | expr EQ expr     { $$ = new BinaryOperator(@2, $1, $3, o_eq); }
-      | expr NEQ expr    { $$ = new BinaryOperator(@2, $1, $3, o_neq); }
-      | expr LT expr     { $$ = new BinaryOperator(@2, $1, $3, o_lt); }
-      | expr GT expr     { $$ = new BinaryOperator(@2, $1, $3, o_gt); }
-      | expr LE expr     { $$ = new BinaryOperator(@2, $1, $3, o_le); }
-      | expr GE expr     { $$ = new BinaryOperator(@2, $1, $3, o_ge); }
-      | expr AND expr    {
+opExpr: expr PLUS expr              { $$ = new BinaryOperator(@2, $1, $3, o_plus);}
+      | expr MINUS expr             { $$ = new BinaryOperator(@2, $1, $3, o_minus); }
+      | expr TIMES expr             { $$ = new BinaryOperator(@2, $1, $3, o_times); }
+      | expr DIVIDE expr            { $$ = new BinaryOperator(@2, $1, $3, o_divide); }
+      | expr EQ expr                { $$ = new BinaryOperator(@2, $1, $3, o_eq); }
+      | expr NEQ expr               { $$ = new BinaryOperator(@2, $1, $3, o_neq); }
+      | expr LT expr                { $$ = new BinaryOperator(@2, $1, $3, o_lt); }
+      | expr GT expr                { $$ = new BinaryOperator(@2, $1, $3, o_gt); }
+      | expr LE expr                { $$ = new BinaryOperator(@2, $1, $3, o_le); }
+      | expr GE expr                { $$ = new BinaryOperator(@2, $1, $3, o_ge); }
+      | expr AND expr               {
         $$ = new IfThenElse(@2, $1,
                             new IfThenElse(@3, $3, new IntegerLiteral(nl, 1), new IntegerLiteral(nl, 0)),
                             new IntegerLiteral(nl, 0));
       }
-      | expr OR expr     {
+      | expr OR expr                {
         $$ = new IfThenElse(@2, $1,
                             new IntegerLiteral(nl, 1),
-                            new IfThenElse(@3, $3, new IntegerLiteral(nl, 1), new IntegerLiteral(nl, 0)));                  
+                            new IfThenElse(@3, $3, new IntegerLiteral(nl, 1), new IntegerLiteral(nl, 0)));              
+      }
+      | IF expr THEN expr ELSE expr {
+        $$ = new IfThenElse(@1, $2, $4, $6);
+      }
+      | IF expr THEN expr %prec ELSE {
+        $$ = new IfThenElse(@1, $2, $4,
+                            new Sequence(nl, std::vector<Expr*>()));
       }
 ;
 
