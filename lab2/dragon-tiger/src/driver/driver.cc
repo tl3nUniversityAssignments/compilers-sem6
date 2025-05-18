@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "../ast/ast_dumper.hh"
+#include "../ast/ast_evaluator.hh"
 #include "../parser/parser_driver.hh"
 #include "../utils/errors.hh"
 
@@ -15,7 +16,8 @@ int main(int argc, char **argv) {
   ("trace-parser", "enable parser traces")
   ("trace-lexer", "enable lexer traces")
   ("verbose,v", "be verbose")
-  ("input-file", po::value(&input_files), "input Tiger file");
+  ("input-file", po::value(&input_files), "input Tiger file")
+  ("eval,e", "run the AST evaluator");
 
   po::positional_options_description positional;
   positional.add("input-file", 1);
@@ -41,6 +43,15 @@ int main(int argc, char **argv) {
 
   if (!parser_driver.parse(input_files[0])) {
     utils::error("parser failed");
+  }
+
+  if (vm.count("eval")) {
+    if (vm.count("dump-ast")) {
+      utils::error("eval cannot be run with dump-ast");
+    }
+    ast::ASTEvaluator evaluator;
+    int32_t result = parser_driver.result_ast->accept(evaluator);
+    std::cout << result << std::endl;
   }
 
   if (vm.count("dump-ast")) {
