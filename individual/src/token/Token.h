@@ -1,6 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <string>
 enum class TokenType {
     // keywords
     KEYWORD_LET,
@@ -39,16 +40,16 @@ enum class TokenType {
     KEYWORD_CASE,
     KEYWORD_BREAK,
     KEYWORD_CONTINUE,
-    KEYWORD_DEBUGGER
+    KEYWORD_DEBUGGER,
     KEYWORD_WITH,
-    KEYWORD_YIELD
+    KEYWORD_YIELD,
 
     INDENTIFIER,
     NUMBER_LITERAL,
     STRING_LITERAL,
     BOOLEAN_LITERAL,            // true/false keyword
     NULL_LITERAL,               // keyword
-    UNDEFINED_LITERAL           // keyword
+    UNDEFINED_LITERAL,           // keyword
 
     // operators
     OP_PLUS,                    // +
@@ -85,8 +86,8 @@ enum class TokenType {
     OP_QUESTION_MARK,           // ?
     OP_COLON,                   // :
     OP_SPREAD,                  // ...
-    OP_OPTIONAL_CHAINING_       // ?.
-    OP_NULLISH_COALESCING       // ??
+    OP_OPTIONAL_CHAINING,       // ?.
+    OP_NULLISH_COALESCING,       // ??
 
     // punctuation
     PUNCT_LPAREN,               // (

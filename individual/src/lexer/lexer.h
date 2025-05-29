@@ -2,6 +2,9 @@
 #define LEXER_H
 
 #include "../token/Token.h"
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 class Lexer {
 public:
@@ -33,6 +36,6 @@ private:
     Token make_error_token(const std::string& message);
 
     void update_position(char c);
-}
+};
 
 #endif // LEXER_H
