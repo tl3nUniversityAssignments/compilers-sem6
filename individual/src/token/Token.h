@@ -23,6 +23,7 @@ enum class TokenType {
     KEYWORD_SUPER,
     KEYWORD_EXTENDS,
     KEYWORD_IMPORT,
+    KEYWORD_EXPORT,
     KEYWORD_DEFAULT,
     KEYWORD_ASYNC,
     KEYWORD_AWAIT,
@@ -44,7 +45,7 @@ enum class TokenType {
     KEYWORD_WITH,
     KEYWORD_YIELD,
 
-    INDENTIFIER,
+    IDENTIFIER,
     NUMBER_LITERAL,
     STRING_LITERAL,
     BOOLEAN_LITERAL,            // true/false keyword
@@ -56,7 +57,7 @@ enum class TokenType {
     OP_MINUS,                   // -
     OP_MULTIPLY,                // *
     OP_DIVIDE,                  // /
-    OP_MODULE,                  // %
+    OP_MODULO,                  // %
     OP_ASSIGN,                  // =
     OP_PLUS_ASSIGN,             // +=
     OP_MINUS_ASSIGN,            // -=

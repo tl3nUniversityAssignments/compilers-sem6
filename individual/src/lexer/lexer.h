@@ -22,7 +22,7 @@ private:
     char peek(size_t offset = 0) const;
     char advance();
     bool match(char expected);
-    bool is_at_end();
+    bool is_at_end() const;
     void skip_whitespaces_and_comments();
 
     Token scan_identifier_or_keyword();
